@@ -21,7 +21,7 @@ type Body struct {
 func main() {
 	args := os.Args[1:]
 	if len(args) != 6 {
-		fmt.Println("Usage: main <URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>")
+		fmt.Println("Usage: main <NODE_URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>")
 		return
 	}
 	intMissedBlockThreshold, err := strconv.Atoi(args[3])
