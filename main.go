@@ -6,38 +6,50 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"strconv"
 	"time"
 )
 
-type Validator struct {
-	URL              string `json:"URL"`
-	ValidatorAddress string `json:"Validator_address"`
-	Explorer         string `json:"Explorer"`
+type Body struct {
+	URL                  string `json:"URL"`
+	ValidatorAddress     string `json:"Validator_address"`
+	Explorer             string `json:"Explorer"`
+	MissedBlockThreshold int    `json:"MissedBlockThreshold"`
 }
 
 func main() {
-	band := Validator{
-		URL:              "https://api-enterprise.nodex.network/v1/rpc/band/commit?=height",
-		ValidatorAddress: "3626ADA5339AEDA433DC76D449544CA09834DAE7",
-		Explorer:         "https://www.cosmoscan.io/validator/bandvaloper13jgj2fu2wc0pff7wnsang3m9xt3k67u8zdd5n5",
+	args := os.Args[1:]
+	if len(args) != 5 {
+		fmt.Println("Usage: main <URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms>")
+		return
+	}
+	intMissedBlockThreshold, err := strconv.Atoi(args[3])
+	if err != nil {
+		fmt.Println("Error converting MissedBlockThreshold to int:", err)
+		return
+	}
+	body := Body{
+		URL:                  args[0],
+		ValidatorAddress:     args[1],
+		Explorer:             args[2],
+		MissedBlockThreshold: intMissedBlockThreshold,
 	}
 
-	// axelarTestnet := Validator{
-	// 	URL:              "https://api-enterprise.nodex.network/v1/rpc/axelar-testnet/block?height",
-	// 	ValidatorAddress: "7A33B63F34C9C8085A7B6720D9C6F3A4799013F7",
-	// 	Explorer:         "https://testnet.axelarscan.io/validator/axelarvaloper1fzsmceetzcvtv3su6z53jjt8a7yc2qczpkh2t4",
-	// }
-
-	bandJSON, _ := json.Marshal(band)
-	// axelarTestnetJSON, _ := json.Marshal(axelarTestnet)
+	bodyJSON, _ := json.Marshal(body)
 
 	headers := map[string]string{
 		"Content-Type": "application/json",
 	}
 
+	intFrequency, err := strconv.Atoi(args[4])
+	if err != nil {
+		fmt.Println("Error converting Frequency to int:", err)
+		return
+	}
 	for {
-		postData("https://node-bot-api-4rjcvtq2ea-as.a.run.app/uptime/commit", bandJSON, headers)
-		time.Sleep(3 * time.Second)
+		postData("http://localhost:9000/uptime/commit", bodyJSON, headers)
+		time.Sleep(time.Duration(intFrequency) * time.Millisecond)
 	}
 }
 
