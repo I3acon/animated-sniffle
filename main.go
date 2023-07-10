@@ -20,8 +20,8 @@ type Body struct {
 
 func main() {
 	args := os.Args[1:]
-	if len(args) != 5 {
-		fmt.Println("Usage: main <URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms>")
+	if len(args) != 6 {
+		fmt.Println("Usage: main <URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>")
 		return
 	}
 	intMissedBlockThreshold, err := strconv.Atoi(args[3])
@@ -48,7 +48,7 @@ func main() {
 		return
 	}
 	for {
-		postData("http://localhost:9000/uptime/commit", bodyJSON, headers)
+		postData(args[5], bodyJSON, headers)
 		time.Sleep(time.Duration(intFrequency) * time.Millisecond)
 	}
 }
