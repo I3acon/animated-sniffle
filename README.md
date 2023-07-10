@@ -9,4 +9,4 @@ go build
 - Run
 ```sh
 # Run dev
-go run main.go <URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>
+go run main.go <NODE_URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>
