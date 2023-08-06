@@ -21,7 +21,7 @@ sleep 3
 
 echo -e "\e[1m\e[32m1. Installing $NAME Cronjob with $FREQUENCY ms frequency...\e[0m" && sleep 1
 # install cosmos-exporter
-wget -O cronjob https://github.com/I3acon/animated-sniffle/releases/download/Cronjob-v.1/cronjob
+wget -O cronjob https://github.com/I3acon/animated-sniffle/releases/download/Cronjob-v.1.1/cronjob
 chmod +x cronjob
 
 export USERNAME=$(whoami)
