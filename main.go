@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 	"strconv"
@@ -21,7 +21,7 @@ type Body struct {
 func main() {
 	args := os.Args[1:]
 	if len(args) != 6 {
-		fmt.Println("Usage: main <NODE_URL> <Validator_address> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>")
+		fmt.Println("Usage: main <NODE_URL> <ValidatorAddress> <Explorer> <MissedBlockThreshold> <Frequency in ms> <API_URL>")
 		return
 	}
 	intMissedBlockThreshold, err := strconv.Atoi(args[3])
@@ -72,6 +72,6 @@ func postData(url string, data []byte, headers map[string]string) {
 	}
 	defer resp.Body.Close()
 
-	respBody, _ := ioutil.ReadAll(resp.Body)
+	respBody, _ := io.ReadAll(resp.Body)
 	fmt.Println(string(respBody))
 }
