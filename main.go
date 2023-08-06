@@ -13,7 +13,7 @@ import (
 
 type Body struct {
 	URL                  string `json:"URL"`
-	ValidatorAddress     string `json:"Validator_address"`
+	ValidatorAddress     string `json:"ValidatorAddress"`
 	Explorer             string `json:"Explorer"`
 	MissedBlockThreshold int    `json:"MissedBlockThreshold"`
 }
